@@ -6,6 +6,10 @@ function M.setup()
 
   -- packer.nvim configuration
   local conf = {
+    profile = {
+      enable = true,
+      threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
+    },
     display = {
       open_fn = function()
         return require("packer.util").float { border = "rounded" }
@@ -60,6 +64,7 @@ function M.setup()
         require("config.neogit").setup()
       end,
     }
+
 
     if packer_bootstrap then
       print "Restart Neovim required after installation!"
