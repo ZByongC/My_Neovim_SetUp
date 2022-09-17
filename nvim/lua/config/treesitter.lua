@@ -6,7 +6,7 @@ function M.setup()
 		ensure_installed = {"lua", "javascript", "typescript", "python", "vim", "java"},
 
 		-- Install languages synchronously (only applied to `ensure_installed`)
-		sync_install = false,
+		sync_install = true,
             
 		highlight = {
 			-- `false` will disable the whole extension
@@ -14,5 +14,5 @@ function M.setup()
 		},
 	}
 end
-                              
+
 return M

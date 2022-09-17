@@ -8,7 +8,7 @@ function M.setup()
   local conf = {
     profile = {
       enable = true,
-      threshold = 0, -- the amount in ms that a plugins load time must be over for it to be included in the profile
+      threshold = 1, -- the amount in ms that a plugins load time must be over for it to be included in the profile
     },
     display = {
       open_fn = function()
@@ -39,6 +39,9 @@ function M.setup()
   -- Plugins
   local function plugins(use)
     use { "wbthomason/packer.nvim" }
+
+		-- Load only when require
+		use { "nvim-lua/plenary.nvim", module = "plenary" }
 
     -- Colorscheme
     use {
@@ -90,7 +93,7 @@ function M.setup()
         config = function()
           require("config.lualine").setup()
         end,
-        requires = { "nvim-web-devicons" },
+        requires = { "kyazdani42/nvim-web-devicons" },
     }
 
 		-- Nvim-Treesitter
