@@ -24,29 +24,17 @@ opt.timeoutlen = 300	--	Time in milliseconds to wait for a mapped sequence to co
 -- Highlight on yank
 vim.cmd [[
 	augroup YankHighlight
-	autocmd!
-	autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+		autocmd!
+		autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 	augroup end
 ]]
 
-function _G.statusline()
-	local filepath = '%f'
-	local align_section = '%='
-	local percentage_through_file = '%p%%'
+-- Better search
+opt.path:remove "/usr/include"
+opt.path:append "**" --  Set the path directly : vim.cmd [[set path=.,,,$PWD/**]]
 
-	return string.format(
-		'%s%s%s',
-		filepath,
-		align_section,
-		percentage_through_file
-	)
-end
---  -- Status line
---  vim.cmd [[
---    set statusline=%!v:lua.statusline()
---    set statusline=%f         " Path to the file
---    set statusline+=%=        " Switch to the rightside
---    set statusline+=%l        " Current line
---    set statusline+=/         " Separator
---    set statusline+=%L        " Total lines
---  ]]
+opt.wildignorecase = true
+opt.wildignore:append "**/node_modules/*"
+opt.wildignore:append "**/.git/*"
+opt.wildignore:append "**/build/*"
+opt.wildignore:append "**/out/*"

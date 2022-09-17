@@ -106,13 +106,33 @@ function M.setup()
         requires = { "kyazdani42/nvim-web-devicons" },
     }
 
-		-- Nvim-Treesitter
+		-- Nvim-Treesitter : highlighting
 		use {
 		  "nvim-treesitter/nvim-treesitter",
 			run = ":TSUpdate",
 			config = function()
 				require("config.treesitter").setup()
 			end,
+		}
+
+		-- Nvim-Tree : File explorer
+		use {
+			'kyazdani42/nvim-tree.lua',
+			requires = {
+				'kyazdani42/nvim-web-devicons', 
+			},
+		}
+
+		-- You don't need to install this if you already have fzf installed
+		use { "junegunn/fzf", run = "./install --all" }
+		use { "junegunn/fzf.vim" }
+
+		-- fzf-lua : File Search
+		use {
+			"ibhagwan/fzf-lua",
+			requires = { 
+				"kyazdani42/nvim-web-devicons" 
+			},
 		}
 
     if packer_bootstrap then
