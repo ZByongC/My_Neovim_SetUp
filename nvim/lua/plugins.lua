@@ -68,6 +68,7 @@ function M.setup()
         require("config.neogit").setup()
       end,
     }
+
     -- WhichKey
     use {
       "folke/which-key.nvim",
@@ -76,6 +77,15 @@ function M.setup()
         require("config.whichkey").setup()
       end,
     }
+
+		-- Better icons
+		use {
+			"kyazdani42/nvim-web-devicons",
+			module = "nvim-web-devicons",
+			config = function()
+				require("nvim-web-devicons").setup { default = true }
+			end,
+		}
 
     -- IndentLine
     use {
