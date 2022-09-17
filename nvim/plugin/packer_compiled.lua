@@ -118,8 +118,11 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
   ["nvim-web-devicons"] = {
-    loaded = true,
-    path = "/home/ubuntu/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
+    config = { "\27LJ\2\2O\0\0\2\0\4\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0B\0\2\1K\0\1\0\1\0\1\fdefault\2\nsetup\22nvim-web-devicons\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/ubuntu/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
   ["packer.nvim"] = {
@@ -146,6 +149,7 @@ _G.packer_plugins = {
 
 time([[Defining packer_plugins]], false)
 local module_lazy_loads = {
+  ["^nvim%-web%-devicons"] = "nvim-web-devicons",
   ["^plenary"] = "plenary.nvim"
 }
 local lazy_load_called = {['packer.load'] = true}
