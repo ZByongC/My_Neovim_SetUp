@@ -28,14 +28,15 @@ function M.setup()
 			lualine_a = { "mode",},
 			lualine_b = { "branch",},
 			lualine_c = {
+				"filename",
 				-- Specific component options
 				{
-					'buffers', -- buffers component options
+					"buffers", -- buffers component options
 					show_filename_only = true,   -- Shows shortened relative path when set to false.
 					hide_filename_extension = false,   -- Hide filename extension when set to true.
 					show_modified_status = true, -- Shows indicator when the buffer is modified.
 
-					mode = 0, -- 0: Shows buffer name
+					mode = 3, -- 0: Shows buffer name
 										-- 1: Shows buffer index
 										-- 2: Shows buffer name + buffer index
 										-- 3: Shows buffer number
@@ -45,46 +46,46 @@ function M.setup()
 																							 -- it can also be a function that returns
 																							 -- the value of `max_length` dynamically.
 					filetype_names = {
-						TelescopePrompt = 'Telescope',
-						dashboard = 'Dashboard',
-						packer = 'Packer',
-						fzf = 'FZF',
-						alpha = 'Alpha'
+						TelescopePrompt = "Telescope",
+						dashboard = "Dashboard",
+						packer = "Packer",
+						fzf = "FZF",
+						alpha = "Alpha"
 					}, -- Shows specific buffer name for that filetype ({ `filetype` = `buffer_name`, ... })
 
 					-- buffers_color = { -- Same values as the general color option can be used here.
-					--   active = 'lualine_{section}_normal', -- Color for active buffer.
-					-- 	inactive = 'lualine_{section}_inactive', -- Color for inactive buffer.
+					--   active = "lualine_{section}_normal", -- Color for active buffer.
+					-- 	inactive = "lualine_{section}_inactive", -- Color for inactive buffer.
 					-- },
 
 					symbols = {
-						modified = ' ●', -- Text to show when the buffer is modified
-						alternate_file = '#', -- Text to show to identify the alternate file
-						directory = '', -- Text to show when the buffer is a directory
+						modified = " ●", -- Text to show when the buffer is modified
+						alternate_file = "#", -- Text to show to identify the alternate file
+						directory = "", -- Text to show when the buffer is a directory
 					},
 				},
 				 
 				{
-					'diagnostics', -- diagnostics component options
+					"diagnostics", -- diagnostics component options
 								       
 					-- Table of diagnostic sources, available sources are:
-					--   'nvim_lsp', 'nvim_diagnostic', 'nvim_workspace_diagnostic', 'coc', 'ale', 'vim_lsp'.
+					--   "nvim_lsp", "nvim_diagnostic", "nvim_workspace_diagnostic", "coc", "ale", "vim_lsp".
 					-- or a function that returns a table as such:
 					--   { error=error_cnt, warn=warn_cnt, info=info_cnt, hint=hint_cnt }
-					sources = { 'nvim_diagnostic', 'coc' },
+					sources = { "nvim_diagnostic", "coc" },
                         
 					-- Displays diagnostics for the defined severity types
-					sections = { 'error', 'warn', 'info', 'hint' },
+					sections = { "error", "warn", "info", "hint" },
                                     
 					diagnostics_color = {
 						-- Same values as the general color option can be used here.
-						error = 'DiagnosticError', -- Changes diagnostics' error color.
-						warn  = 'DiagnosticWarn', -- Changes diagnostics' warn color.
-						info  = 'DiagnosticInfo', -- Changes diagnostics' info color.
-						hint  = 'DiagnosticHint', -- Changes diagnostics' hint color.
+						error = "DiagnosticError", -- Changes diagnostics" error color.
+						warn  = "DiagnosticWarn", -- Changes diagnostics" warn color.
+						info  = "DiagnosticInfo", -- Changes diagnostics" info color.
+						hint  = "DiagnosticHint", -- Changes diagnostics" hint color.
 					},
                                                                                         
-					symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' },
+					symbols = { error = "E", warn = "W", info = "I", hint = "H" },
 					colored = true, -- Displays diagnostics status in color if set to true.
 					update_in_insert = false, -- Update diagnostics in insert mode.
 					always_visible = false, -- Show diagnostics even if there are none.

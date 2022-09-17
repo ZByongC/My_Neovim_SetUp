@@ -115,31 +115,80 @@ function M.setup()
 			end,
 		}
 
-		-- Nvim-Tree : File explorer
-		use {
-			'kyazdani42/nvim-tree.lua',
-			requires = {
-				'kyazdani42/nvim-web-devicons', 
-			},
-		}
-
-		-- You don't need to install this if you already have fzf installed
-		use { "junegunn/fzf", run = "./install --all" }
-		use { "junegunn/fzf.vim" }
-
 		-- fzf-lua : File Search
+		if PLUGINS.fzf_lua.enabled then
+			-- You don't need to install this if you already have fzf installed
+			use { "junegunn/fzf", run = "./install --all" }
+			use { "junegunn/fzf.vim", event = "BufEnter" }
+			use {
+				"ibhagwan/fzf-lua",
+				event = "BufEnter",
+				wants = "nvim-web-devicons",
+				requires = {
+					"junegunn/fzf",
+					run = "./install --all"
+				},
+			}
+		end
+
+		-- nvim-tree
 		use {
-			"ibhagwan/fzf-lua",
-			requires = { 
-				"kyazdani42/nvim-web-devicons" 
-			},
+			"kyazdani42/nvim-tree.lua",
+			wants = "nvim-web-devicons",
+			cmd = { "NvimTreeToggle", "NvimTreeClose" },
+			module = "nvim-tree",
+			config = function()
+				require("config.nvimtree").setup()
+			end,
 		}
 
-    if packer_bootstrap then
-      print "Restart Neovim required after installation!"
-      require("packer").sync()
-    end
-  end
+		-- Telescope
+		if PLUGINS.telescope.enabled then
+			use {
+				"nvim-telescope/telescope.nvim",
+				opt = true,
+				config = function()
+					require("config.telescope").setup()
+				end,
+				cmd = { "Telescope" },
+				module = "telescope",
+				keys = { "<leader>f", "<leader>p" },
+				wants = {
+					"plenary.nvim",
+					"popup.nvim",
+					"telescope-fzf-native.nvim",
+					"telescope-project.nvim",
+					"telescope-repo.nvim",
+					"telescope-file-browser.nvim",
+					"project.nvim",
+				},
+				requires = {
+					"nvim-lua/popup.nvim",
+					"nvim-lua/plenary.nvim",
+					{ 
+						"nvim-telescope/telescope-fzf-native.nvim",
+						run = "make"
+					},
+					"nvim-telescope/telescope-project.nvim",
+					"cljoly/telescope-repo.nvim",
+					"nvim-telescope/telescope-file-browser.nvim",
+					{
+						"ahmedkhalf/project.nvim",
+						config = function()
+							require("project_nvim").setup {}
+						end,
+					},
+				},
+			}
+		end
+
+
+		if packer_bootstrap then
+			print "Restart Neovim required after installation!"
+			require("packer").sync()
+		end
+
+	end
 
   packer_init()
 

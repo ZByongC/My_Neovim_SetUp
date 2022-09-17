@@ -45,7 +45,7 @@ function M.setup()
       e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
     }
   end
-	
+
   local opts = {
     mode = "n", -- Normal mode
     prefix = "<leader>",
@@ -61,9 +61,12 @@ function M.setup()
 
     b = {
       name = "Buffer",
-      c = { "<Cmd>bd!<Cr>", "Close current buffer" },
-      D = { "<Cmd>%bd|e#|bd#<Cr>", "Delete all buffers" },
+      c = { "<Cmd>bd!<Cr>", "Close Buffer" },
+      D = { "<Cmd>%bd|e#|bd#<Cr>", "Delete All Buffers" },
     },
+
+    f = keymaps_f,
+    p = keymaps_p,
 
     z = {
       name = "Packer",
@@ -79,9 +82,6 @@ function M.setup()
       name = "Git",
       s = { "<cmd>Neogit<CR>", "Status" },
     },
-
-    f = keymaps_f,
-    p = keymaps_p,
   }
 
   whichkey.setup(conf)
