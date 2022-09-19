@@ -189,7 +189,7 @@ function M.setup()
 			"neovim/nvim-lspconfig",
 			opt = true,
 			event = "BufReadPre",
-			wants = { "nvim-lsp-installer", "lsp_signature.nvim", "coq_nvim" }, -- for coq.nvim
+			wants = { "nvim-lsp-installer", "coq_nvim", "lua-dev.nvim", "vim-illuminate" },
 
 			config = function()
 				require("config.lsp").setup()
@@ -197,12 +197,21 @@ function M.setup()
 
 			requires = {
 				"williamboman/nvim-lsp-installer",
-				"ray-x/lsp_signature.nvim",
+				"folke/lua-dev.nvim",
+				"RRethy/vim-illuminate",
+				-- "ray-x/lsp_signature.nvim",
 			},
 		}
 
+		-- completion interactive with lsp
 		use {
 			"ms-jpq/coq_nvim",
+		}
+
+		-- nvim-jdtls
+		use {
+			"mfussenegger/nvim-jdtls",
+			ft = { "java" }
 		}
 
 		if packer_bootstrap then

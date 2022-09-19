@@ -1,7 +1,74 @@
 local M = {}
 
+-- Color table for highlights
+local colors = {
+	bg = "#202328",
+	fg = "#bbc2cf",
+	yellow = "#ECBE7B",
+	cyan = "#008080",
+	darkblue = "#081633",
+	green = "#98be65",
+	orange = "#FF8800",
+	violet = "#a9a1e1",
+	magenta = "#c678dd",
+	blue = "#51afef",
+	red = "#ec5f67",
+}
+
+local function separator()
+	return "%="
+end
+
+local function lsp_client()
+	local buf_clients = vim.lsp.buf_get_clients()
+
+	if next(buf_clients) == nil then
+		return ""
+	end
+
+	local buf_client_names = {}
+
+	for _, client in pairs(buf_clients) do
+		if client.name ~= "null-ls" then
+			table.insert(buf_client_names, client.name)
+		end
+	end
+
+	return "[" .. table.concat(buf_client_names, ", ") .. "]"
+end
+
+local function lsp_progress(_, is_active)
+	if not is_active then
+		return
+	end
+
+	local messages = vim.lsp.util.get_progress_messages()
+
+	if #messages == 0 then
+		return ""
+	end
+
+	local status = {}
+
+	for _, msg in pairs(messages) do
+		local title = ""
+
+		if msg.title then
+			title = msg.title
+		end
+
+		table.insert(status, (msg.percentage or 0) .. "%% " .. title)
+	end
+
+	local spinners = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+	local ms = vim.loop.hrtime() / 1000000
+	local frame = math.floor(ms / 120) % #spinners
+
+	return table.concat(status, "  ") .. " " .. spinners[frame + 1]
+
+end
+
 function M.setup()
-		  
 	require("lualine").setup {
 		-- Global options
 		options = {
@@ -15,7 +82,7 @@ function M.setup()
 			},
 			ignorefocus = {},
 			always_divide_middle = true,
-      globalstatus = false,
+			globalstatus = false,
 			-- refresh = {
 			-- 	statusline = 1000,
 			-- 	tabline = 1000,
@@ -25,73 +92,15 @@ function M.setup()
 
 		-- General component options
 		sections = {
-			lualine_a = { "mode",},
-			lualine_b = { "branch",},
+			lualine_a = { "mode" },
+			lualine_b = { "branch", "diff", "diagnostics" },
 			lualine_c = {
-				-- Specific component options
-				{
-					"buffers", -- buffers component options
-					show_filename_only = true,   -- Shows shortened relative path when set to false.
-					hide_filename_extension = false,   -- Hide filename extension when set to true.
-					show_modified_status = true, -- Shows indicator when the buffer is modified.
-
-					mode = 2, -- 0: Shows buffer name
-										-- 1: Shows buffer index
-										-- 2: Shows buffer name + buffer index
-										-- 3: Shows buffer number
-										-- 4: Shows buffer name + buffer number
-																					                                                      
-					-- max_length = vim.o.columns * 2 /3, -- Maximum width of buffers component,
-																							 -- it can also be a function that returns
-																							 -- the value of `max_length` dynamically.
-					filetype_names = {
-						TelescopePrompt = "Telescope",
-						dashboard = "Dashboard",
-						packer = "Packer",
-						fzf = "FZF",
-						alpha = "Alpha"
-					}, -- Shows specific buffer name for that filetype ({ `filetype` = `buffer_name`, ... })
-
-					-- buffers_color = { -- Same values as the general color option can be used here.
-					--   active = "lualine_{section}_normal", -- Color for active buffer.
-					-- 	inactive = "lualine_{section}_inactive", -- Color for inactive buffer.
-					-- },
-
-					symbols = {
-						modified = " ●", -- Text to show when the buffer is modified
-						alternate_file = "#", -- Text to show to identify the alternate file
-						directory = "", -- Text to show when the buffer is a directory
-					},
-				},
-				 
-				{
-					"diagnostics", -- diagnostics component options
-								       
-					-- Table of diagnostic sources, available sources are:
-					--   "nvim_lsp", "nvim_diagnostic", "nvim_workspace_diagnostic", "coc", "ale", "vim_lsp".
-					-- or a function that returns a table as such:
-					--   { error=error_cnt, warn=warn_cnt, info=info_cnt, hint=hint_cnt }
-					sources = { "nvim_diagnostic", "coc" },
-                        
-					-- Displays diagnostics for the defined severity types
-					sections = { "error", "warn", "info", "hint" },
-                                    
-					diagnostics_color = {
-						-- Same values as the general color option can be used here.
-						error = "DiagnosticError", -- Changes diagnostics" error color.
-						warn  = "DiagnosticWarn", -- Changes diagnostics" warn color.
-						info  = "DiagnosticInfo", -- Changes diagnostics" info color.
-						hint  = "DiagnosticHint", -- Changes diagnostics" hint color.
-					},
-                                                                                        
-					symbols = { error = "E", warn = "W", info = "I", hint = "H" },
-					colored = true, -- Displays diagnostics status in color if set to true.
-					update_in_insert = false, -- Update diagnostics in insert mode.
-					always_visible = false, -- Show diagnostics even if there are none.
-				},
+				{ separator },
+				{ lsp_client, icon = " ", color = { fg = colors.violet, gui = "bold" } },
+				{ lsp_progress },
 			},
-		
-			lualine_x = { "encoding", "fileformat", "filetype" },
+
+			lualine_x = { "filename", "encoding", "fileformat", "filetype" },
 			lualine_y = { "progress" },
 			lualine_z = { "location" },
 		},
@@ -104,7 +113,7 @@ function M.setup()
 			lualine_y = {},
 			lualine_z = {},
 		},
-		
+
 		tabline = {},
 		winbar = {},
 		inactive_winbar = {},

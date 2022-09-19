@@ -99,14 +99,14 @@ _G.packer_plugins = {
     path = "/home/ubuntu/.local/share/nvim/site/pack/packer/opt/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
-  ["lsp_signature.nvim"] = {
+  ["lua-dev.nvim"] = {
     load_after = {
       ["nvim-lspconfig"] = true
     },
     loaded = false,
     needs_bufread = false,
-    path = "/home/ubuntu/.local/share/nvim/site/pack/packer/opt/lsp_signature.nvim",
-    url = "https://github.com/ray-x/lsp_signature.nvim"
+    path = "/home/ubuntu/.local/share/nvim/site/pack/packer/opt/lua-dev.nvim",
+    url = "https://github.com/folke/lua-dev.nvim"
   },
   ["lualine.nvim"] = {
     config = { "\27LJ\2\2<\0\0\2\0\3\0\0066\0\0\0'\1\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\19config.lualine\frequire\0" },
@@ -125,6 +125,13 @@ _G.packer_plugins = {
     path = "/home/ubuntu/.local/share/nvim/site/pack/packer/opt/neogit",
     url = "https://github.com/TimUntersberger/neogit"
   },
+  ["nvim-jdtls"] = {
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/ubuntu/.local/share/nvim/site/pack/packer/opt/nvim-jdtls",
+    url = "https://github.com/mfussenegger/nvim-jdtls"
+  },
   ["nvim-lsp-installer"] = {
     load_after = {
       ["nvim-lspconfig"] = true
@@ -135,14 +142,14 @@ _G.packer_plugins = {
     url = "https://github.com/williamboman/nvim-lsp-installer"
   },
   ["nvim-lspconfig"] = {
-    after = { "lsp_signature.nvim", "nvim-lsp-installer" },
+    after = { "lua-dev.nvim", "vim-illuminate", "nvim-lsp-installer" },
     config = { "\27LJ\2\0028\0\0\2\0\3\0\0066\0\0\0'\1\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\15config.lsp\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
     path = "/home/ubuntu/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig",
-    wants = { "nvim-lsp-installer", "lsp_signature.nvim", "coq_nvim" }
+    wants = { "nvim-lsp-installer", "coq_nvim", "lua-dev.nvim", "vim-illuminate" }
   },
   ["nvim-tree.lua"] = {
     commands = { "NvimTreeToggle" },
@@ -247,6 +254,15 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-telescope/telescope.nvim",
     wants = { "plenary.nvim", "popup.nvim", "telescope-fzf-native.nvim", "telescope-project.nvim", "telescope-repo.nvim", "telescope-file-browser.nvim", "project.nvim" }
   },
+  ["vim-illuminate"] = {
+    load_after = {
+      ["nvim-lspconfig"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/ubuntu/.local/share/nvim/site/pack/packer/opt/vim-illuminate",
+    url = "https://github.com/RRethy/vim-illuminate"
+  },
   ["vim-vinegar"] = {
     loaded = true,
     path = "/home/ubuntu/.local/share/nvim/site/pack/packer/start/vim-vinegar",
@@ -321,6 +337,10 @@ time([[Defining lazy-load keymaps]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
+  -- Filetype lazy-loads
+time([[Defining lazy-load filetype autocommands]], true)
+vim.cmd [[au FileType java ++once lua require("packer.load")({'nvim-jdtls'}, { ft = "java" }, _G.packer_plugins)]]
+time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
 vim.cmd [[au VimEnter * ++once lua require("packer.load")({'which-key.nvim', 'lualine.nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
