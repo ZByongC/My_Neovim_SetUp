@@ -5,6 +5,10 @@ local expr_opts = { noremap = true, expr = true, silent = true }
 -- Better escape using jk in insert and terminal mode
 keymap("i", "jk", "<ESC>", default_opts)
 keymap("t", "jk", "<C-\\><C-n>", default_opts)
+keymap("t", "<C-h>", "<C-\\><C-n><C-w>h", default_opts)
+keymap("t", "<C-j>", "<C-\\><C-n><C-w>j", default_opts)
+keymap("t", "<C-k>", "<C-\\><C-n><C-w>k", default_opts)
+keymap("t", "<C-l>", "<C-\\><C-n><C-w>l", default_opts)
 
 -- Center search results
 keymap("n", "n", "nzz", default_opts)
@@ -13,6 +17,11 @@ keymap("n", "N", "Nzz", default_opts)
 -- Visual line wraps
 keymap("n", "k", "v:count == 0 ? 'gk' : 'k'", expr_opts)
 keymap("n", "j", "v:count == 0 ? 'gj' : 'j'", expr_opts)
+
+-- Always center
+keymap("n", "k", "kzz", default_opts)
+keymap("n", "j", "jzz", default_opts)
+keymap("n", "G", "Gzz", default_opts)
 
 -- Better indent
 keymap("v", "<", "<gv", default_opts)
@@ -37,3 +46,11 @@ keymap("n", "<Left>", ":vertical resize +1<CR>", default_opts)
 keymap("n", "<Right>", ":vertical resize -1<CR>", default_opts)
 keymap("n", "<Up>", ":resize -1<CR>", default_opts)
 keymap("n", "<Down>", ":resize +1<CR>", default_opts)
+
+-- Insert blank line
+keymap("n", "]<Space>", "o<Esc>", default_opts)
+keymap("n", "[<Space>", "O<Esc>", default_opts)
+
+-- Browser search
+keymap("n", "gx", "<Plug>(openbrowser-smart-search)", default_opts)
+keymap("x", "gx", "<Plug>(openbrowser-smart-search)", default_opts)

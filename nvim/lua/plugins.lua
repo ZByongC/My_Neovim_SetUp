@@ -78,6 +78,11 @@ function M.setup()
 			end,
 		}
 
+		use {
+			"lewis6991/gitsigns.nvim"
+		}
+
+
 		-- WhichKey
 		use {
 			"folke/which-key.nvim",
@@ -193,12 +198,25 @@ function M.setup()
 			end,
 		}
 
+		-- completion interactive with lsp
+		use {
+			"ms-jpq/coq_nvim",
+		}
+
 		-- LSP
 		use {
 			"neovim/nvim-lspconfig",
 			opt = true,
 			event = "BufReadPre",
-			wants = { "nvim-lsp-installer", "coq_nvim", "lua-dev.nvim", "vim-illuminate", "null-ls.nvim" },
+			wants = {
+				"nvim-lsp-installer",
+				"coq_nvim",
+				"lua-dev.nvim",
+				"vim-illuminate",
+				"null-ls.nvim",
+				"schemastore.nvim",
+				"nvim-lsp-ts-utils",
+			},
 
 			config = function()
 				require("config.lsp").setup()
@@ -206,6 +224,7 @@ function M.setup()
 
 			requires = {
 				"williamboman/nvim-lsp-installer",
+				"ms-jpq/coq_nvim",
 				"folke/lua-dev.nvim",
 				"RRethy/vim-illuminate",
 				-- "ray-x/lsp_signature.nvim",
@@ -216,19 +235,29 @@ function M.setup()
 						require("fidget").setup {}
 					end,
 				},
+				"b0o/schemastore.nvim",
+				"jose-elias-alvarez/nvim-lsp-ts-utils",
 			},
-		}
-
-
-		-- completion interactive with lsp
-		use {
-			"ms-jpq/coq_nvim",
 		}
 
 		-- nvim-jdtls
 		use {
 			"mfussenegger/nvim-jdtls",
 			ft = { "java" }
+		}
+
+		-- Rust
+		use {
+			"simrat39/rust-tools.nvim",
+			requires = {
+				"nvim-lua/plenary.nvim",
+				"rust-lang/rust.vim"
+			},
+			module = "rust-tools",
+			ft = { "rust" },
+			config = function()
+				require("rust-tools").setup {}
+			end,
 		}
 
 		if packer_bootstrap then

@@ -5,13 +5,21 @@ local servers = {
 	},
 	gopls = {},
 	html = {},
-	jsonls = {},
+
 	pyright = {
 
 	},
 	rust_analyzer = {},
 	tsserver = {},
 	vimls = {},
+
+	jsonls = {
+		settings = {
+			json = {
+				schemas = require("schemastore").json.schemas(),
+			},
+		},
+	},
 
 	sumneko_lua = {
 
@@ -54,8 +62,16 @@ local function on_attach(client, bufnr)
 	-- Configure key mappings
 	require("config.lsp.keymaps").setup(client, bufnr)
 
-	-- Configure highlighting
-	require("config.lsp.highlighting").setup(client)
+	-- Configure highlighter
+	require("config.lsp.highlighter").setup(client)
+
+	-- Configure formatting
+	require("config.lsp.null-ls.formatters").setup(client, bufnr)
+
+	-- Configure for typescript
+	if client.name == "tsserver" then
+		require("config.lsp.ts-utils").setup(client)
+	end
 end
 
 local opts = {
@@ -69,6 +85,10 @@ local opts = {
 require("config.lsp.handlers").setup()
 
 function M.setup()
+	-- null-ls
+	require("config.lsp.null-ls").setup(opts)
+
+	-- Installer
 	require("config.lsp.installer").setup(servers, opts)
 end
 
