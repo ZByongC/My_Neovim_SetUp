@@ -1,82 +1,82 @@
 local M = {}
 
 function M.setup()
-  -- Indicate first time installation
-  local packer_bootstrap = false
+	-- Indicate first time installation
+	local packer_bootstrap = false
 
-  -- packer.nvim configuration
-  local conf = {
-    profile = {
-      enable = true,
-      threshold = 1, -- the amount in ms that a plugins load time must be over for it to be included in the profile
-    },
-    display = {
-      open_fn = function()
-        return require("packer.util").float { border = "rounded" }
-      end,
-    },
-  }
+	-- packer.nvim configuration
+	local conf = {
+		profile = {
+			enable = true,
+			threshold = 1, -- the amount in ms that a plugins load time must be over for it to be included in the profile
+		},
+		display = {
+			open_fn = function()
+				return require("packer.util").float { border = "rounded" }
+			end,
+		},
+	}
 
-  -- Check if packer.nvim is installed
-  -- Run PackerCompile if there are changes in this file
-  local function packer_init()
-    local fn = vim.fn
-    local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-    if fn.empty(fn.glob(install_path)) > 0 then
-      packer_bootstrap = fn.system {
-        "git",
-        "clone",
-        "--depth",
-        "1",
-        "https://github.com/wbthomason/packer.nvim",
-        install_path,
-      }
-      vim.cmd [[packadd packer.nvim]]
-    end
-    vim.cmd "autocmd BufWritePost plugins.lua source <afile> | PackerCompile"
-  end
+	-- Check if packer.nvim is installed
+	-- Run PackerCompile if there are changes in this file
+	local function packer_init()
+		local fn = vim.fn
+		local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+		if fn.empty(fn.glob(install_path)) > 0 then
+			packer_bootstrap = fn.system {
+				"git",
+				"clone",
+				"--depth",
+				"1",
+				"https://github.com/wbthomason/packer.nvim",
+				install_path,
+			}
+			vim.cmd [[packadd packer.nvim]]
+		end
+		vim.cmd "autocmd BufWritePost plugins.lua source <afile> | PackerCompile"
+	end
 
-  -- Plugins
-  local function plugins(use)
-    use { "wbthomason/packer.nvim" }
+	-- Plugins
+	local function plugins(use)
+		use { "wbthomason/packer.nvim" }
 
 		-- Load only when require
 		use { "nvim-lua/plenary.nvim", module = "plenary" }
 
-    -- Colorscheme
-    use {
-      "sainnhe/everforest",
-      config = function()
-        vim.cmd "colorscheme everforest"
-      end,
-    }
+		-- Colorscheme
+		use {
+			"sainnhe/everforest",
+			config = function()
+				vim.cmd "colorscheme everforest"
+			end,
+		}
 
-    -- Startup screen
-    use {
-      "goolord/alpha-nvim",
-      config = function()
-        require("config.alpha").setup()
-      end,
-    }
+		-- Startup screen
+		use {
+			"goolord/alpha-nvim",
+			config = function()
+				require("config.alpha").setup()
+			end,
+		}
 
-    -- Git
-    use {
-      "TimUntersberger/neogit",
-      cmd = "Neogit",
-      requires = "nvim-lua/plenary.nvim",
-      config = function()
-        require("config.neogit").setup()
-      end,
-    }
+		-- Git
+		use {
+			"TimUntersberger/neogit",
+			cmd = "Neogit",
+			requires = "nvim-lua/plenary.nvim",
+			config = function()
+				require("config.neogit").setup()
+			end,
+		}
 
-    -- WhichKey
-    use {
-      "folke/which-key.nvim",
-      event = "VimEnter",
-      config = function()
-        require("config.whichkey").setup()
-      end,
-    }
+		-- WhichKey
+		use {
+			"folke/which-key.nvim",
+			event = "VimEnter",
+			config = function()
+				require("config.whichkey").setup()
+			end,
+		}
 
 		-- Better icons
 		use {
@@ -87,28 +87,28 @@ function M.setup()
 			end,
 		}
 
-    -- IndentLine
-    use {
-      "lukas-reineke/indent-blankline.nvim",
-      event = "BufReadPre",
-      config = function()
-        require("config.indentblankline").setup()
-      end,
-    }
+		-- IndentLine
+		use {
+			"lukas-reineke/indent-blankline.nvim",
+			event = "BufReadPre",
+			config = function()
+				require("config.indentblankline").setup()
+			end,
+		}
 
-    -- StatusLine
-    use {
-      "nvim-lualine/lualine.nvim",
-        event = "VimEnter",
-        config = function()
-          require("config.lualine").setup()
-        end,
-        requires = { "kyazdani42/nvim-web-devicons" },
-    }
+		-- StatusLine
+		use {
+			"nvim-lualine/lualine.nvim",
+			event = "VimEnter",
+			config = function()
+				require("config.lualine").setup()
+			end,
+			requires = { "kyazdani42/nvim-web-devicons" },
+		}
 
 		-- Nvim-Treesitter : highlighting
 		use {
-		  "nvim-treesitter/nvim-treesitter",
+			"nvim-treesitter/nvim-treesitter",
 			run = ":TSUpdate",
 			config = function()
 				require("config.treesitter").setup()
@@ -131,17 +131,6 @@ function M.setup()
 			}
 		end
 
-		-- nvim-tree
-		use {
-			"kyazdani42/nvim-tree.lua",
-			wants = "nvim-web-devicons",
-			cmd = { "NvimTreeToggle", "NvimTreeClose" },
-			module = "nvim-tree",
-			config = function()
-				require("config.nvimtree").setup()
-			end,
-		}
-
 		-- Telescope
 		if PLUGINS.telescope.enabled then
 			use {
@@ -163,9 +152,9 @@ function M.setup()
 					"project.nvim",
 				},
 				requires = {
-					"nvim-lua/popup.nvim",
 					"nvim-lua/plenary.nvim",
-					{ 
+					"nvim-lua/popup.nvim",
+					{
 						"nvim-telescope/telescope-fzf-native.nvim",
 						run = "make"
 					},
@@ -182,6 +171,39 @@ function M.setup()
 			}
 		end
 
+		-- Better Netrw
+		use { "tpope/vim-vinegar" }
+
+		-- nvim-tree
+		use {
+			"kyazdani42/nvim-tree.lua",
+			wants = "nvim-web-devicons",
+			cmd = { "NvimTreeToggle" },
+			config = function()
+				require("config.nvimtree").setup()
+			end,
+		}
+
+		-- LSP
+		use {
+			"neovim/nvim-lspconfig",
+			opt = true,
+			event = "BufReadPre",
+			wants = { "nvim-lsp-installer", "lsp_signature.nvim", "coq_nvim" }, -- for coq.nvim
+
+			config = function()
+				require("config.lsp").setup()
+			end,
+
+			requires = {
+				"williamboman/nvim-lsp-installer",
+				"ray-x/lsp_signature.nvim",
+			},
+		}
+
+		use {
+			"ms-jpq/coq_nvim",
+		}
 
 		if packer_bootstrap then
 			print "Restart Neovim required after installation!"
@@ -190,11 +212,11 @@ function M.setup()
 
 	end
 
-  packer_init()
+	packer_init()
 
-  local packer = require "packer"
-  packer.init(conf)
-  packer.startup(plugins)
+	local packer = require "packer"
+	packer.init(conf)
+	packer.startup(plugins)
 end
 
 return M

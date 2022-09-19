@@ -32,7 +32,7 @@ function M.find_dotfiles()
 
 	require("telescope.builtin").git_files {
 		prompt_title = "<Dotfiles>",
-		cwd = "$HOME/workspace/alpha2phi/dotfiles/",
+		cwd = "$HOME/.config",
 	}
 
 end

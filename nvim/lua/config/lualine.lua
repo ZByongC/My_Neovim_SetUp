@@ -28,7 +28,6 @@ function M.setup()
 			lualine_a = { "mode",},
 			lualine_b = { "branch",},
 			lualine_c = {
-				"filename",
 				-- Specific component options
 				{
 					"buffers", -- buffers component options
@@ -36,7 +35,7 @@ function M.setup()
 					hide_filename_extension = false,   -- Hide filename extension when set to true.
 					show_modified_status = true, -- Shows indicator when the buffer is modified.
 
-					mode = 3, -- 0: Shows buffer name
+					mode = 2, -- 0: Shows buffer name
 										-- 1: Shows buffer index
 										-- 2: Shows buffer name + buffer index
 										-- 3: Shows buffer number
@@ -89,7 +88,7 @@ function M.setup()
 					colored = true, -- Displays diagnostics status in color if set to true.
 					update_in_insert = false, -- Update diagnostics in insert mode.
 					always_visible = false, -- Show diagnostics even if there are none.
-				}
+				},
 			},
 		
 			lualine_x = { "encoding", "fileformat", "filetype" },
@@ -100,8 +99,8 @@ function M.setup()
 		inactive_sections = {
 			lualine_a = {},
 			lualine_b = {},
-			lualine_c = {},
-			lualine_x = {},
+			lualine_c = { "buffers", "filename" },
+			lualine_x = { "location" },
 			lualine_y = {},
 			lualine_z = {},
 		},

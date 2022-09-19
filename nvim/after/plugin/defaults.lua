@@ -31,10 +31,25 @@ vim.cmd [[
 
 -- Better search
 opt.path:remove "/usr/include"
-opt.path:append "**" --  Set the path directly : vim.cmd [[set path=.,,,$PWD/**]]
+opt.path:append "**"
+-- vim.cmd [[set path=.,,,$PWD/**]] -- Set the path directly
 
 opt.wildignorecase = true
 opt.wildignore:append "**/node_modules/*"
 opt.wildignore:append "**/.git/*"
 opt.wildignore:append "**/build/*"
 opt.wildignore:append "**/out/*"
+
+-- Better Netrw, alternatively just use vinegar.vim
+-- g.netrw_banner = 0 -- Hide banner
+-- g.netrw_browse_split = 4 -- Open in previous window
+-- g.netrw_altv = 1 -- Open with right splitting
+-- g.netrw_liststyle = 3 -- Tree-style view
+-- g.netrw_list_hide = (vim.fn["netrw_gitignore#Hide"]()) .. [[,\(^\|\s\s\)\zs\.\S\+]] -- use .gitignore
+
+-- Treesitter based folding
+vim.cmd [[
+	set foldlevel=20
+	set foldmethod=expr
+	set foldexpr=nvim_treesitter#foldexpr()
+]]
