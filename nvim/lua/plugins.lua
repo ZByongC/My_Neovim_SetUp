@@ -260,6 +260,15 @@ function M.setup()
 			end,
 		}
 
+		-- Go
+		use {
+			"ray-x/go.nvim",
+			ft = { "go" },
+			config = function()
+				require("go").setup()
+			end,
+		}
+
 		if packer_bootstrap then
 			print "Restart Neovim required after installation!"
 			require("packer").sync()
