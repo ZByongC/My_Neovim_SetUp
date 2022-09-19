@@ -43,6 +43,15 @@ function M.setup()
 		-- Load only when require
 		use { "nvim-lua/plenary.nvim", module = "plenary" }
 
+		-- Notification
+		use {
+			"rcarriga/nvim-notify",
+			event = "VimEnter",
+			config = function()
+				vim.notify = require "notify"
+			end,
+		}
+
 		-- Colorscheme
 		use {
 			"sainnhe/everforest",
