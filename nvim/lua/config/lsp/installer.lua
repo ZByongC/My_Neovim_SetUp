@@ -23,7 +23,7 @@ function M.setup(servers, options)
 
 		if server_name == "sumneko_lua" then
 			opts = require("lua-dev").setup {
-				lspconfig = opts 
+				lspconfig = opts
 			}
 		end
 

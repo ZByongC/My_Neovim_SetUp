@@ -198,7 +198,7 @@ function M.setup()
 			"neovim/nvim-lspconfig",
 			opt = true,
 			event = "BufReadPre",
-			wants = { "nvim-lsp-installer", "coq_nvim", "lua-dev.nvim", "vim-illuminate" },
+			wants = { "nvim-lsp-installer", "coq_nvim", "lua-dev.nvim", "vim-illuminate", "null-ls.nvim" },
 
 			config = function()
 				require("config.lsp").setup()
@@ -209,8 +209,16 @@ function M.setup()
 				"folke/lua-dev.nvim",
 				"RRethy/vim-illuminate",
 				-- "ray-x/lsp_signature.nvim",
+				"jose-elias-alvarez/null-ls.nvim",
+				{
+					"j-hui/fidget.nvim",
+					config = function()
+						require("fidget").setup {}
+					end,
+				},
 			},
 		}
+
 
 		-- completion interactive with lsp
 		use {
