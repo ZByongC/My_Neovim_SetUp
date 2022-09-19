@@ -37,36 +37,37 @@ local function lsp_client()
 	return "[" .. table.concat(buf_client_names, ", ") .. "]"
 end
 
-local function lsp_progress(_, is_active)
-	if not is_active then
-		return
-	end
-
-	local messages = vim.lsp.util.get_progress_messages()
-
-	if #messages == 0 then
-		return ""
-	end
-
-	local status = {}
-
-	for _, msg in pairs(messages) do
-		local title = ""
-
-		if msg.title then
-			title = msg.title
-		end
-
-		table.insert(status, (msg.percentage or 0) .. "%% " .. title)
-	end
-
-	local spinners = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
-	local ms = vim.loop.hrtime() / 1000000
-	local frame = math.floor(ms / 120) % #spinners
-
-	return table.concat(status, "  ") .. " " .. spinners[frame + 1]
-
-end
+----------------- use fidget.nvim ---------------------------
+-- local function lsp_progress(_, is_active)
+-- 	if not is_active then
+-- 		return
+-- 	end
+--
+-- 	local messages = vim.lsp.util.get_progress_messages()
+--
+-- 	if #messages == 0 then
+-- 		return ""
+-- 	end
+--
+-- 	local status = {}
+--
+-- 	for _, msg in pairs(messages) do
+-- 		local title = ""
+--
+-- 		if msg.title then
+-- 			title = msg.title
+-- 		end
+--
+-- 		table.insert(status, (msg.percentage or 0) .. "%% " .. title)
+-- 	end
+--
+-- 	local spinners = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+-- 	local ms = vim.loop.hrtime() / 1000000
+-- 	local frame = math.floor(ms / 120) % #spinners
+--
+-- 	return table.concat(status, "  ") .. " " .. spinners[frame + 1]
+--
+-- end
 
 function M.setup()
 	require("lualine").setup {
@@ -93,11 +94,20 @@ function M.setup()
 		-- General component options
 		sections = {
 			lualine_a = { "mode" },
-			lualine_b = { "branch", "diff", "diagnostics" },
+			lualine_b = {
+				"branch",
+				"diff",
+				{
+					"diagnostics",
+					sources = { "nvim_diagnostic" },
+					symbols = { error = " ", warn = " ", info = " ", hint = " " },
+					colored = false,
+				},
+			},
 			lualine_c = {
 				{ separator },
 				{ lsp_client, icon = " ", color = { fg = colors.violet, gui = "bold" } },
-				{ lsp_progress },
+				-- { lsp_progress },
 			},
 
 			lualine_x = { "filename", "encoding", "fileformat", "filetype" },
@@ -108,7 +118,7 @@ function M.setup()
 		inactive_sections = {
 			lualine_a = {},
 			lualine_b = {},
-			lualine_c = { "buffers", "filename" },
+			lualine_c = { "filename" },
 			lualine_x = { "location" },
 			lualine_y = {},
 			lualine_z = {},

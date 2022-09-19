@@ -1,15 +1,25 @@
 local M = {}
 
 local servers = {
-	jdtls = {
-	},
 	gopls = {},
 	html = {},
 
 	pyright = {
-
 	},
-	rust_analyzer = {},
+
+	rust_analyzer = {
+		rust_analyzer = {
+			settings = {
+				["rust-analyzer"] = {
+					cargo = { allFeatures = true },
+					checkOnSave = {
+						command = "clippy",
+						extraArgs = { "--no-deps" },
+					},
+				},
+			},
+		},
+	},
 	tsserver = {},
 	vimls = {},
 
@@ -22,7 +32,6 @@ local servers = {
 	},
 
 	sumneko_lua = {
-
 		settings = {
 			Lua = {
 				runtime = {

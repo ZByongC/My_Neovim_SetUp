@@ -77,11 +77,21 @@ function M.setup()
 				require("config.neogit").setup()
 			end,
 		}
-
 		use {
-			"lewis6991/gitsigns.nvim"
+			"lewis6991/gitsigns.nvim",
+			event = "BufReadPre",
+			wants = "plenary.nvim",
+			requires = { "nvim-lua/plenary.nvim" },
+			config = function()
+				require("config.gitsigns").setup()
+			end,
 		}
-
+		use {
+			"tpope/vim-fugitive",
+			cmd = { "Git", "GBrowse", "Gdiffsplit", "Gvdiffsplit" },
+			requires = { "tpope/vim-rhubarb" },
+			-- wants = { "vim-rhubarb" },
+		}
 
 		-- WhichKey
 		use {
@@ -196,11 +206,6 @@ function M.setup()
 			config = function()
 				require("config.nvimtree").setup()
 			end,
-		}
-
-		-- completion interactive with lsp
-		use {
-			"ms-jpq/coq_nvim",
 		}
 
 		-- LSP
